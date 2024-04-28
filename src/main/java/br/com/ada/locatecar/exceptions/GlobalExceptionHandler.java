@@ -1,6 +1,7 @@
 package br.com.ada.locatecar.exceptions;
 
 import br.com.ada.locatecar.payload.response.MessageResponse;
+import org.springframework.http.HttpStatus; // Import for more control over status code
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,13 +10,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailInUseException.class)
-    public ResponseEntity<?> handleEmailInUseException(EmailInUseException ex) {
-        return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+    public ResponseEntity<MessageResponse> handleEmailInUseException(EmailInUseException ex) {
+        // Use a more informative status code
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new MessageResponse("That email address is already in use. Please try a different one."));
     }
 
     @ExceptionHandler(DocumentInUseException.class)
-    public ResponseEntity<?> handleDocumentInUseException(DocumentInUseException ex) {
-        return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+    public ResponseEntity<MessageResponse> handleDocumentInUseException(DocumentInUseException ex) {
+        // Use a more informative status code
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new MessageResponse(ex.getMessage()));
     }
-
 }
