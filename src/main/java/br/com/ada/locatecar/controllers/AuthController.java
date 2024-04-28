@@ -13,24 +13,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.GrantedAuthority;
 
-
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
     @Autowired
     private AuthService authService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+        // Welcome the new user and explain the process
+        System.out.println("Welcome, " + signupRequest.getUsername() + "!");
+        System.out.println("We'll create your account to help you rent cars with ease.");
+
         try {
             authService.registerUser(signupRequest);
-            return ResponseEntity.ok(new MessageResponse("User registered successfully"));
+            return ResponseEntity.ok(new MessageResponse("Your account is ready! Welcome aboard."));
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+            // Provide a more user-friendly error message
+            String errorMessage = "Oops, something went wrong during registration. Please try again, or contact us if the issue persists.";
+            return ResponseEntity.badRequest().body(new MessageResponse(errorMessage));
         }
     }
 
@@ -40,8 +46,11 @@ public class AuthController {
         String jwt = (String) items[0];
         UserDetailsImpl userDetails = (UserDetailsImpl) items[1];
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getAuthorities().stream()
+        // Craft a more welcoming login response
+        List<String> authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList())));
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), authorities));
     }
 }
