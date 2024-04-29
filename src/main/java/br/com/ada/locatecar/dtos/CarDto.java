@@ -3,10 +3,13 @@ package br.com.ada.locatecar.dtos;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.sql.Array;
 
 @Entity
 @Data
@@ -33,9 +36,10 @@ public class CarDto {
     private String engine;
     @Column(name = "horsepower")
     private int horsepower;
-//    private Array features;
     @Column(name = "owners")
     private int owners;
     @Column(name = "image")
     private String image;
+
+
 }

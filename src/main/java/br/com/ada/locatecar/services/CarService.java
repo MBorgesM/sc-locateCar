@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @Service
 public class CarService {
     private static final String URL = "https://freetestapi.com";
-    private static final String URL_ALL_CARS = "/api/v1/cars ";
-    private static final String URL_CAR = "/api/v1/cars/{idCar} ";
+    private static final String URL_ALL_CARS = "/api/v1/cars";
+//    private static final String URL_CAR = "/api/v1/cars/{idCar} ";
 
     @Autowired
     private CarRepository carRepository;
