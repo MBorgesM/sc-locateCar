@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CarService {
     private static final String URL = "https://freetestapi.com";
     private static final String URL_ALL_CARS = "/api/v1/cars";
-//    private static final String URL_CAR = "/api/v1/cars/{idCar} ";
+    private static final String URL_CAR = "/api/v1/cars/{idCar}";
 
     @Autowired
     private CarRepository carRepository;
@@ -31,7 +31,17 @@ public class CarService {
         return List.of(Objects.requireNonNull(cars));
     }
 
-    public List<CarDto> sugarDistritos() {
+    public CarDto getCarById(String idCar) {
+
+        return WebClient.create(URL)
+                .get()
+                .uri(URL_CAR, idCar)
+                .retrieve()
+                .bodyToMono(CarDto.class)
+                .block();
+    }
+
+    public List<CarDto> sugarCars() {
         List<CarDto> cars = this.getAllCar();
         return this.saveAll(cars);
     }
@@ -44,5 +54,10 @@ public class CarService {
 
     private CarDto save(CarDto carDto) {
         return this.carRepository.save(carDto);
+    }
+
+    public CarDto sugarCar(String idCar) {
+        CarDto car = this.getCarById(idCar);
+        return this.save(car);
     }
 }
