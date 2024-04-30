@@ -17,6 +17,12 @@ public class CarController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<CarDto> sugarCarsWebFlux(){
-        return carService.sugarDistritos();
+        return carService.sugarCars();
+    }
+
+    @GetMapping("/{idCar}")
+    @ResponseStatus(HttpStatus.OK)
+    public CarDto sugarCarWebFlux(@PathVariable String idCar){
+        return carService.sugarCar(idCar);
     }
 }
