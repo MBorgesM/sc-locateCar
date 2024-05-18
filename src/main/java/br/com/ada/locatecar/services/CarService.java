@@ -60,4 +60,12 @@ public class CarService {
         CarDto car = this.getCarById(idCar);
         return this.save(car);
     }
+
+    public List<CarDto> getAllAvailableCars() {
+        return carRepository.findAllAvailableCars();
+    }
+
+    public boolean checkIfCarIsAvailable(Long id) {
+        return carRepository.isCarAvailable(id);
+    }
 }

@@ -25,4 +25,9 @@ public class CarController {
     public CarDto sugarCarWebFlux(@PathVariable String idCar){
         return carService.sugarCar(idCar);
     }
+
+    @GetMapping("/available")
+    public List<CarDto> getAllAvailableCars() {
+        return carService.getAllAvailableCars();
+    }
 }

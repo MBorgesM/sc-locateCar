@@ -61,7 +61,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return document;
+        return String.valueOf(id);
     }
 
     @Override
