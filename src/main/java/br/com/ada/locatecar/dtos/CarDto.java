@@ -3,12 +3,14 @@ package br.com.ada.locatecar.dtos;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Entity
 @Data
+@Table(name = "car_dto")
 public class CarDto {
     @Id
     private long id;
@@ -16,7 +18,7 @@ public class CarDto {
     private String make;
     @Column(name = "model")
     private String model;
-    @Column(name = "year")
+    @Column(name = "\"year\"")
     private long year;
     @Column(name = "color")
     private String color;

@@ -1,5 +1,6 @@
 package br.com.ada.locatecar.services;
 
+import br.com.ada.locatecar.exceptions.CarAlreadyRentedException;
 import br.com.ada.locatecar.models.CarStatus;
 import br.com.ada.locatecar.models.Rent;
 import br.com.ada.locatecar.repositories.CarRepository;
@@ -25,6 +26,9 @@ public class RentService {
     public Rent rentCar(Long carId, Long userId, LocalDateTime rentTime) {
         CarStatus carStatus = carStatusRepository.findById(carId)
                 .orElseThrow(() -> new IllegalArgumentException("Car status not found"));
+        if (carStatus.getStatus().equals("Rented")) {
+            throw new CarAlreadyRentedException();
+        }
         carStatus.setStatus("Rented");
         carStatusRepository.save(carStatus);
 

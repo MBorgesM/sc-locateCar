@@ -3,6 +3,7 @@ package br.com.ada.locatecar.models;
 
 import br.com.ada.locatecar.dtos.CarDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "rent")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Rent {
 
     @Id
